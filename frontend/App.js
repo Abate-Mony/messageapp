@@ -13,7 +13,7 @@ window.onload = function() {
     var sec = 0
     var timer = null
     const moreOptionsContainer = document.querySelector(".moreoptions-container")
-    changeView(0)
+    changeView(1)
 
     function changeView(index) {
         _children.forEach(child => {
