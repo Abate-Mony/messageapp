@@ -30,9 +30,23 @@ app.use(notfound)
 
 const start = async() => {
     try {
-        app.listen(port, () => {
+        const httpServer = app.listen(port, () => {
             console.log("app is running on port " + port)
         })
+        const WebSocket = require("ws")
+        const wss = new WebSocket.Server({ server: httpServer })
+        wss.on("connection", function connection(ws) {
+            // console.log("new client connected")
+            ws.send("welcome new client hahha")
+            ws.on("message", function incoming(message) {
+                wss.clients.forEach(function each(client) {
+                    if (client !== ws && client.readyState === WebSocket.OPEN) {
+                        client.send(message.toString())
+                    }
+                })
+            })
+        })
+
         require("./backend/db/connections")
     } catch (error) {
         console.log(error)

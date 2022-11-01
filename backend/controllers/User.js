@@ -66,10 +66,10 @@ const getUsers = async(req, res) => {
 }
 const SignUp = async(req, res, next) => {
     const { email, password, password1, name } = req.body
-    console.log(req.body, req.files)
+        // console.log(req.body, req.files)
     const _email = await User.findOne({ email })
     if (_email) {
-        throw new BadErrorRequest("email already exist")
+        throw new UnethicatedError("email already exist")
     }
     const user = await User.create({ email, password, name })
     const token = jwt.sign({ _id: user._id, email: user.email }, process.env.jwtSecret, { expiresIn: "10d" })
