@@ -4,7 +4,6 @@ window.onload = function() {
 
     const messageBox = [...document.querySelectorAll(".messagebox")]
     const _children = [...document.querySelector(".main-container").children]
-        // const backBtn = document.getElementById("backBtn")
     const userBtn = document.getElementById("userBtn")
     const emjBtn = document.getElementById("emjBtn")
     const emjContainer = document.querySelector(".emj-container")
@@ -32,11 +31,6 @@ window.onload = function() {
         e.preventDefault();
 
     });
-
-    // backBtn.addEventListener("click", e => {
-    //     timer && clearInterval(timer)
-    //     sec = 0
-    // })
     userBtn.addEventListener("click", e => {
         changeView(0)
 
@@ -92,7 +86,8 @@ window.onload = function() {
             for (let j = 0; j < all.length; ++j) {
                 for (let i = (j + 1); i < all.length; ++i) {
                     if ((all[j].classList.contains("flex-end") && all[i].classList.contains("flex-end")) ||
-                        (all[j].classList.contains("recieve-message") && all[i].classList.contains("recieve-message"))) {
+                        (all[j].classList.contains("recieve-message") &&
+                            all[i].classList.contains("recieve-message"))) {
                         continue
                     } else {
                         all[j].style.marginTop = `3rem`

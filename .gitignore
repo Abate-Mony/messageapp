@@ -1,1 +1,4 @@
 node_modules
+./backend/Profile_pictures
+./backend/Images
+./frontend
