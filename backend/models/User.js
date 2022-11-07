@@ -2,11 +2,21 @@
  const bcryptjs = require("bcryptjs")
  const jwt = require("jsonwebtoken")
  const UserSchema = new Schema({
-     name: {
+     first_name: {
          type: String,
          required: [true, "please provide a name "],
-         minLength: 3,
+         minLength: 2,
          maxLength: 50
+     },
+     second_name: {
+         type: String,
+         required: [true, "please provide a name "],
+         minLength: 2,
+         maxLength: 50
+     },
+     full_names: {
+         type: String,
+         default: "the user name was not provided by the systenm",
      },
      email: {
          type: String,
@@ -28,8 +38,10 @@
  UserSchema.pre("validate", async function(next) {
      const salt = await bcryptjs.genSalt(10);
      this.password = await bcryptjs.hash(this.password, salt);
+     this.full_names = this.first_name + " " + this.second_name
      next()
  })
+
  UserSchema.methods.createJWT = async function() {
      return (jwt.sign({ _id: this._id, email: this.email },
          process.env.jwtSecret, { expiresIn: "10d" }))

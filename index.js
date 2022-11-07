@@ -1,4 +1,52 @@
 const express = require("express")
+const GOOGLE_API_FOLDER_ID = "1fVCp7jsPIZmAY4GiHS-AjraRvp839apd"
+const fs = require("fs")
+const { google } = require("googleapis")
+
+async function uploadFile() {
+    try {
+        const auth = new google.auth.GoogleAuth({
+            keyFile: "./googlekey.json",
+            scopes: ["https://www.googleapis.com/auth/drive"]
+        })
+        const driveService = google.drive({
+            version: "v3",
+            auth
+        })
+        const fileMethaData = {
+            "name": "snow.png",
+            "parents": [GOOGLE_API_FOLDER_ID]
+        }
+        const media = {
+            mimType: "image/png",
+            body: fs.createReadStream('snow.png')
+        }
+        const response = await driveService.files.create({
+            resource: fileMethaData,
+            media: media,
+            field: "id"
+        })
+        return response.data.id
+    } catch (error) {
+        console.log("upload file error", error)
+    }
+}
+// uploadFile().then((data) => {
+//     console.log(data)
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+
 require("dotenv").config()
 require("express-async-errors")
 const path = require("path")
@@ -21,13 +69,13 @@ app.use("/profile", express.static(path.join(__dirname, "backend/Profile_picture
     // app.use("/dashboard", express.static(path.join(__dirname, "public")))
 
 app.use("/message", auth, messageRouter)
-app.use("/upload", imageUploadRouter)
+app.use("/upload", auth, imageUploadRouter)
 app.use(express.urlencoded({ extended: false }))
-    // app.get("/", (req, res) => {
-    //     res.send("hello new user")
-    // })
+app.use(error)
 app.use(notfound)
-
+app.get("/", (req, res) => {
+    res.send("hello new user")
+})
 const start = async() => {
     try {
         const httpServer = app.listen(port, () => {
@@ -41,6 +89,7 @@ const start = async() => {
             ws.on("message", function incoming(message) {
                 wss.clients.forEach(function each(client) {
                     if (client !== ws && client.readyState === WebSocket.OPEN) {
+                        console.log(message.toString())
                         client.send(message.toString())
                     }
                 })

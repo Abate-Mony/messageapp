@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken")
 const { BadErrorRequest, UnethicatedError } = require("../errors/index")
 const auth = async(req, res, next) => {
+    // console.log()
     const authHeader = req.headers.authorization
+    console.log(authHeader)
     if (!authHeader || !authHeader.startsWith("doris")) {
         throw new BadErrorRequest("bad token ")
     }
