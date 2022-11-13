@@ -52,7 +52,9 @@ require("express-async-errors")
 const path = require("path")
 const app = express()
 const cors = require("cors")
-app.use(cors())
+    // app.use(cors())
+app.use(cors({ origin: true }));
+
 const port = process.env.PORT || process.env.port
 app.use(express.json())
 
