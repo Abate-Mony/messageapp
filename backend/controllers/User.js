@@ -8,7 +8,7 @@ const Users = async(req, res) => {
     const searchvalue = req.params.search
     var users = null
     if (searchvalue === "*") {
-        users = await User.find({}, { password: 0, email: 0 }).limit(100)
+        users = await User.find({}, { password: 0, email: 0 }).sort({ full_names: 1 }).limit(100)
     } else {
         users = await User.find({
             full_names: {

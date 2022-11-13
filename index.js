@@ -2,7 +2,6 @@ const express = require("express")
 const GOOGLE_API_FOLDER_ID = "1fVCp7jsPIZmAY4GiHS-AjraRvp839apd"
 const fs = require("fs")
 const { google } = require("googleapis")
-
 async function uploadFile() {
     try {
         const auth = new google.auth.GoogleAuth({
@@ -44,6 +43,7 @@ async function uploadFile() {
 
 
 
+const serverImage = require("./backend/routes/ServerImages")
 
 
 
@@ -54,7 +54,6 @@ const app = express()
 const port = process.env.PORT || process.env.port
 app.use(express.json())
 const cors = require("cors")
-app.use(cors())
 const auth = require("./backend/middlewares/Auth")
 const userRouter = require("./backend/routes/User")
 const messageRouter = require("./backend/routes/Message")
@@ -62,10 +61,12 @@ const notfound = require("./backend/middlewares/notfound")
 const imageUploadRouter = require("./backend/routes/Image")
 const error = require("./backend/middlewares/error")
 const fileup = require("express-fileupload")
+app.use(cors())
 app.use(fileup())
 app.use("/auth", userRouter)
 app.use("/images", express.static(path.join(__dirname, "backend/Images")))
-app.use("/profile", express.static(path.join(__dirname, "backend/Profile_pictures")))
+app.use("/profile/image", express.static(path.join(__dirname, "backend/Profile_pictures")))
+app.use("/", serverImage)
     // app.use("/dashboard", express.static(path.join(__dirname, "public")))
 
 app.use("/message", auth, messageRouter)
@@ -76,25 +77,46 @@ app.use(notfound)
 app.get("/", (req, res) => {
     res.send("hello new user")
 })
+
 const start = async() => {
     try {
         const httpServer = app.listen(port, () => {
-            console.log("app is running on port " + port)
-        })
+                console.log("app is running on port " + port)
+            })
+            // var connectUsers = []
         const WebSocket = require("ws")
         const wss = new WebSocket.Server({ server: httpServer })
         wss.on("connection", function connection(ws) {
             // console.log("new client connected")
             ws.send("welcome new client hahha")
             ws.on("message", function incoming(message) {
+                // console.log(message.toString())
+                // const userId = message.toString()
+                // const regex = /user_id/
+                // if (userId.match(regex)) {
+                //     const id = userId.split(":")[1]
+                //     console.log(id)
+                //     if (!connectUsers.includes(message)) {
+                //         connectUsers.push(
+                //             id
+                //         )
+                //         console.log("addded to connected users !!!")
+                //     }
+                // }
                 wss.clients.forEach(function each(client) {
                     if (client !== ws && client.readyState === WebSocket.OPEN) {
-                        console.log(message.toString())
                         client.send(message.toString())
                     }
                 })
             })
+
+
+            // ws.on("LOGIN", function handleLogin() {
+            //     console.log("connected with the id and the user aand tg")
+            // })
+
         })
+
 
         require("./backend/db/connections")
     } catch (error) {

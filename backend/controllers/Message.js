@@ -47,8 +47,18 @@ const messages = async(req, res) => {
         nHits: user_messages.length
     })
 }
+const getMessage = async(req, res) => {
+    const _id = req.params.id
+    const message = await Message.find({ _id }, { message: 1, _id: 0 })
+    if (!message) {
+        res.status(404).json({ fail: "fail" })
+        return
+    }
+    res.status(200).json({ message })
+}
 module.exports = {
     messages,
     deleteMessage,
-    createMessage
+    createMessage,
+    getMessage
 }
