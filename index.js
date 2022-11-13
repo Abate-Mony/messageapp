@@ -52,12 +52,17 @@ require("express-async-errors")
 const path = require("path")
 const app = express()
 const cors = require("cors")
+const whitelist = ["http://localhost:3000", "*"]
 const corsOptions = {
-    origin: '*',
-    credentials: true, //access-control-allow-credentials:true
-    optionSuccessStatus: 200,
+    origin: function(origin, callback) {
+        if (!origin || whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    },
+    credentials: true,
 }
-
 app.use(cors(corsOptions))
 
 
@@ -76,8 +81,6 @@ app.use("/auth", userRouter)
 app.use("/images", express.static(path.join(__dirname, "backend/Images")))
 app.use("/profile/image", express.static(path.join(__dirname, "backend/Profile_pictures")))
 app.use("/", serverImage)
-    // app.use("/dashboard", express.static(path.join(__dirname, "public")))
-
 app.use("/message", auth, messageRouter)
 app.use("/upload", auth, imageUploadRouter)
 app.use(express.urlencoded({ extended: false }))
