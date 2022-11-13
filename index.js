@@ -76,10 +76,10 @@ app.use("/message", auth, messageRouter)
 app.use("/upload", auth, imageUploadRouter)
 app.use(express.urlencoded({ extended: false }))
 app.use(error)
-app.use(notfound)
 app.get("/", (req, res) => {
     res.send("hello new user")
 })
+app.use(notfound)
 
 const start = async() => {
     try {
