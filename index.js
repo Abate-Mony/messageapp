@@ -52,13 +52,14 @@ require("express-async-errors")
 const path = require("path")
 const app = express()
 const cors = require("cors")
+app.use(cors())
+
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "*");
     next()
 
 })
-app.use(cors())
 
 
 const port = process.env.PORT || process.env.port
