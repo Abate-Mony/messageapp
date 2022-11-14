@@ -49,7 +49,16 @@ require("express-async-errors")
 const path = require("path")
 const app = express()
 const cors = require("cors")
-    // app.use(cors())
+
+const corsOptions = {
+    origin: ["https://messageappalaisah.herokuapp.com", "http://localhost:3000"],
+    preflightContinue: false,
+    credentials: true
+}
+
+
+
+app.use(cors(corsOptions))
 
 // app.use((req, res, next) => {
 //     res.setHeader('Access-Control-Allow-Origin', "https://messageappfrontendkepa.herokuapp.com");
@@ -60,7 +69,7 @@ const cors = require("cors")
 // });
 
 
-const port = process.env.PORT || process.env.port
+const port = process.env.PORT || 5000
 app.use(express.json())
 
 const auth = require("./backend/middlewares/Auth")
