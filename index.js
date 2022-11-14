@@ -50,15 +50,9 @@ const path = require("path")
 const app = express()
 const cors = require("cors")
 
-const corsOptions = {
-    origin: ["https://messageappalaisah.herokuapp.com", "http://localhost:3000"],
-    preflightContinue: false,
-    credentials: true
-}
 
 
-
-app.use(cors(corsOptions))
+app.use(cors())
 
 // app.use((req, res, next) => {
 //     res.setHeader('Access-Control-Allow-Origin', "https://messageappfrontendkepa.herokuapp.com");
