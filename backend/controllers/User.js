@@ -3,6 +3,7 @@ const Message = require("../models/Message")
 const Image = require("../models/Image")
 const jwt = require("jsonwebtoken")
 const { BadErrorRequest, UnethicatedError } = require("../errors/index")
+const path = require("path")
 
 const Users = async(req, res) => {
     const searchvalue = req.params.search
@@ -76,7 +77,7 @@ const SignUp = async(req, res, next) => {
         throw new UnethicatedError("Email already exist")
     }
     const user = await User.create({ email, password, first_name, second_name })
-    const token = jwt.sign({ _id: user._id, email: user.email }, process.env.jwtSecret, { expiresIn: "10d" })
+    const token = jwt.sign({ _id: user._id, email: user.email }, "myfirstbilliondollar", { expiresIn: "10d" })
     req.userInfo = {
         files: req.files,
         id: user._id,

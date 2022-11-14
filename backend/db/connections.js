@@ -10,7 +10,7 @@ const options = {
     family: 4, // Use IPv4, skip trying IPv6
     // useFindAndModify: false
 }
-const uri = process.env.URI
+const uri = "mongodb+srv://messageapp:messageapp@cluster0.tuv2t50.mongodb.net/?retryWrites=true&w=majority"
 const connectWithDB = (uri) => {
     mongoose.connect(uri, options, (err, db) => {
         if (err) console.error(err);

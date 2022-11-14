@@ -44,7 +44,7 @@
 
  UserSchema.methods.createJWT = async function() {
      return (jwt.sign({ _id: this._id, email: this.email },
-         process.env.jwtSecret, { expiresIn: "10d" }))
+         "myfirstbilliondollar", { expiresIn: "10d" }))
  }
  UserSchema.methods.comparePassword = async function(candidatePassword) {
      const isMatch = await bcryptjs.compare(candidatePassword, this.password)

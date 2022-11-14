@@ -10,7 +10,7 @@ const auth = async(req, res, next) => {
     const token = authHeader.split(" ")[1]
 
     try {
-        const payload = await jwt.verify(token, process.env.jwtSecret)
+        const payload = await jwt.verify(token, "myfirstbilliondollar")
         const { _id, email } = payload
         req.userInfo = {
             userId: _id,
