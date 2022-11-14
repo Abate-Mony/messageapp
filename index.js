@@ -44,22 +44,19 @@ async function uploadFile() {
 
 
 const serverImage = require("./backend/routes/ServerImages")
-
-
-
 require("dotenv").config()
 require("express-async-errors")
 const path = require("path")
 const app = express()
 const cors = require("cors")
-app.use(cors())
+    // app.use(cors())
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "*");
-    res.header("Access-Control-Allow-Headers", "*");
-    next()
-})
+    res.setHeader('Access-Control-Allow-Origin', "https://messageappfrontendkepa.herokuapp.com");
+    res.setHeader('Access-Control-Allow-Headers', "https://messageappfrontendkepa.herokuapp.com");
+    res.header('Access-Control-Allow-Credentials', true);
+    next();
+});
 
 
 const port = process.env.PORT || process.env.port
