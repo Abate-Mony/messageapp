@@ -9,7 +9,7 @@ const images = async(req, res) => {
         throw new BadErrorRequest("please provide a sender and reciever id")
     }
     if (req.files) {
-        var file = req.files
+        var file = req.dfiles
         var filename = file.file.name
         const fileextension = path.extname(filename)
 

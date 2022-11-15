@@ -1,12 +1,15 @@
 const fs = require("fs")
 const path = require("path")
+    // import {BadRequestError} from '../errors'
+const { BadErrorRequest } = require("../errors/index")
+
 const serveImage = async(req, res) => {
     const { id } = req.params
     console.log(id)
     const abs = path.resolve(__dirname, "../Profile_pictures")
     fs.readdir(abs, (err, files) => {
         if (err) {
-            throw new err
+            throw new BadErrorRequest
         }
         var myfile = null
         for (let file of files) {
