@@ -5,7 +5,6 @@ const images = async(req, res) => {
     const createdBy = req.userInfo.userId
     const { sentTo } = req.body
     console.log(req.body)
-    return res.status(200).json({ status: true })
     if (!sentTo || !createdBy) {
         throw new BadErrorRequest("please provide a sender and reciever id")
     }
