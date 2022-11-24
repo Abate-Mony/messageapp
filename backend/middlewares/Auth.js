@@ -18,7 +18,7 @@ const auth = async(req, res, next) => {
         }
         next()
     } catch (error) {
-        throw new error
+        throw new BadErrorRequest("token has expired")
     }
 }
 module.exports = auth

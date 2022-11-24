@@ -1,7 +1,7 @@
 const { model, Schema } = require("mongoose")
 
 const ImageSchema = new Schema({
-    name: {
+    url: {
         type: String,
         require: [true, "please provide an image name"]
     },
@@ -19,7 +19,7 @@ const ImageSchema = new Schema({
     timestamps: true
 })
 ImageSchema.pre("validate", async function(next) {
-    this.name = this._id + this.name
+    this.url = "https://drive.google.com/uc?exportmview&id=" + this.url
     next()
 })
 module.exports = model("images", ImageSchema)

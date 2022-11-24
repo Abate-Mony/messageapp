@@ -10,9 +10,10 @@ const options = {
     family: 4, // Use IPv4, skip trying IPv6
     // useFindAndModify: false
 }
+const LOCAL_URI = "mongodb://localhost:27017/MESSAGEAPP"
 const uri = "mongodb+srv://messageapp:messageapp@cluster0.tuv2t50.mongodb.net/?retryWrites=true&w=majority"
 const connectWithDB = (uri) => {
-    mongoose.connect(uri, options, (err, db) => {
+    mongoose.connect(LOCAL_URI, options, (err, db) => {
         if (err) console.error(err);
         else console.log("database connection")
     })
