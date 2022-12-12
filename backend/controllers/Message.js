@@ -29,6 +29,29 @@ const deleteMessage = async(req, res) => {
     res.status(200).json({ status: true })
 
 }
+
+const deleteMultipleMessages = async(req, res) => {
+    const { list } = req.body
+    if (!(list && list.length >= 1)) {
+        if (list == null) {
+            throw new BadErrorRequest("send a truthy value ")
+        }
+        throw new BadErrorRequest("list must be greater than or equals to zero but got ")
+    }
+    console.log(list)
+
+    const deleteallselectedmessage = await Promise.all(
+            list.map((item) => {
+                return Message.findOneAndDelete({ _id: item }).then((data) => data).catch(error => `${error} fail to delete message with id : ${item}`)
+            })
+        )
+        // console.log(deleteallselectedmessage)
+    return res.status(200).json({ status: true })
+}
+
+
+
+
 const messages = async(req, res) => {
     const { userId } = req.userInfo
     const { id } = req.params
@@ -60,5 +83,6 @@ module.exports = {
     messages,
     deleteMessage,
     createMessage,
-    getMessage
+    getMessage,
+    deleteMultipleMessages
 }

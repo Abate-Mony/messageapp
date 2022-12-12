@@ -90,28 +90,39 @@ app.use(notfound)
 const start = async() => {
     try {
         const httpServer = app.listen(port, () => {
-                console.log("app is running on port " + port)
-            })
-            // var connectUsers = []
+            console.log("app is running on port " + port)
+        })
+        var connectUsers = []
         const WebSocket = require("ws")
         const wss = new WebSocket.Server({ server: httpServer })
         wss.on("connection", function connection(ws) {
             // console.log("new client connected")
             ws.send("welcome new client hahha")
+            ws.on("close", function close(message) {
+                console.log("socket is closing !! with id : ", message.toString())
+            })
             ws.on("message", function incoming(message) {
-                // console.log(message.toString())
-                // const userId = message.toString()
-                // const regex = /user_id/
-                // if (userId.match(regex)) {
-                //     const id = userId.split(":")[1]
-                //     console.log(id)
-                //     if (!connectUsers.includes(message)) {
-                //         connectUsers.push(
-                //             id
-                //         )
-                //         console.log("addded to connected users !!!")
-                //     }
-                // }
+                console.log(message.toString())
+                const userId = message.toString()
+                const regex = /user_id/
+                if (userId.match(regex)) {
+                    const id = userId.split(":")[1]
+                        // console.log(id)
+
+
+                    if (!connectUsers.includes(id)) {
+                        connectUsers.push(
+                            id
+                        )
+                        console.log("addded to connected users !!! with id : ", id)
+                    }
+                    // if (!connectUsers.includes(message)) {
+                    //     connectUsers.push(
+                    //         id
+                    //     )
+                    //     console.log("addded to connected users !!!")
+                    // }
+                }
                 wss.clients.forEach(function each(client) {
                     if (client !== ws && client.readyState === WebSocket.OPEN) {
                         client.send(message.toString())
