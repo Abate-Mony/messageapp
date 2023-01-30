@@ -56,7 +56,7 @@ app.use(cors())
 
 
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5757
 app.use(express.json())
 
 const auth = require("./backend/middlewares/Auth")
