@@ -54,13 +54,6 @@ const cors = require("cors")
 
 app.use(cors())
 
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', "https://messageappfrontendkepa.herokuapp.com");
-//     res.setHeader('Access-Control-Allow-Headers', "https://messageappfrontendkepa.herokuapp.com");
-//     res.header('Access-Control-Allow-Credentials', true);
-
-//     next();
-// });
 
 
 const port = process.env.PORT || 5000
