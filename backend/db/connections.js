@@ -13,7 +13,7 @@ const options = {
 const LOCAL_URI = "mongodb://localhost:27017/MESSAGEAPP"
 const uri = "mongodb+srv://messageapp:messageapp@cluster0.tuv2t50.mongodb.net/?retryWrites=true&w=majority"
 const connectWithDB = (uri) => {
-    mongoose.connect(LOCAL_URI, options, (err, db) => {
+    mongoose.connect(uri, options, (err, db) => {
         if (err) console.error(err);
         else console.log("database connection")
     })
