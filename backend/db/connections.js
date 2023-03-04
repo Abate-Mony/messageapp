@@ -18,5 +18,5 @@ const connectWithDB = (uri) => {
         else console.log("database connection")
     })
 }
-connectWithDB(LOCAL_URI)
+connectWithDB(uri)
 module.exports = connectWithDB
